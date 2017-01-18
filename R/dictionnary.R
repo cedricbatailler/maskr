@@ -1,3 +1,11 @@
+#' Create a SHA1 dictionnary from a dataframe column
+#'
+#' Given a dataframe variable, returns a dictionnary to be used to crypt and
+#' decrypt this variable using \code{crypt()} and \code{decrypt()} fuctions
+#'
+#' @param .data Dataframe containing the variable
+#' @param .var Column to be used to create the dictionnary
+#'
 #' @import dplyr
 #' @importFrom digest sha1
 #' @export

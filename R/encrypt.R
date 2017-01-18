@@ -1,3 +1,12 @@
+#' Crypt one column from a  dataframe using a dictionnary
+#'
+#' Given a maskr dataframe and a dictionnary, returns a crypted data
+#' frame.
+#'
+#' @param .data Dataframe containing the variable
+#' @param .var Column to be crypted
+#' @param .dictionnary Dictionnary to be used to crypt the variable
+#'
 #' @import dplyr
 #' @export
 
