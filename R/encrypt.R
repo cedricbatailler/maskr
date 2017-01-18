@@ -4,6 +4,7 @@
 encrypt <-
   function(.data, .var, dictionnary)
   {
+    # Use encrypt specific method according to object's class
     UseMethod("encrypt")
   }
 
@@ -12,8 +13,15 @@ encrypt <-
 encrypt.data.frame <-
   function(.data, .var, dictionnary)
   {
+    # Extract variable to be process as a string
     .varname <-
       deparse(substitute(.var))
+
+    # Take ".data"
+    # and append dictionnary using a match between "word" and ".var"
+    # rename ".var" as old
+    # rename "cryptogram" from dictionnary as ".var"
+    # drop "old" column
 
     .data %>%
       left_join(dictionnary, setNames("word", .varname)) %>%
