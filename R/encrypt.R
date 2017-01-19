@@ -28,14 +28,15 @@ encrypt.data.frame <-
 
     # Take ".data"
     # and append dictionnary using a match between "word" and ".var"
-    # rename ".var" as old
-    # rename "cryptogram" from dictionnary as ".var"
-    # drop "old" column
+    # set ".var" columns value to "cryptogram" one's
+    # drop "cryptogram" column
+
+    mutate_call <-
+      lazyeval::interp(~cryptogram)
 
     .data %>%
       left_join(dictionnary, setNames("word", .varname)) %>%
-      rename_(.dots = setNames(.varname, "old")) %>%
-      rename_(.dots = setNames("cryptogram", .varname)) %>%
-      select(-old)
+      mutate_(.dots = setNames(list(mutate_call), .varname)) %>%
+      select(-cryptogram)
 
   }
