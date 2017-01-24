@@ -8,6 +8,8 @@
 #' @param .dictionnary Dictionnary to be used to decrypt the crypted variable
 #'
 #' @import dplyr
+#' @importFrom stats SetNames
+#' @importFrom lazyeval interp
 #' @export
 
 decrypt <-
@@ -33,7 +35,7 @@ decrypt.data.frame <-
     # drop "word" column
 
     mutate_call <-
-      lazyeval::interp(~word)
+      interp(~word)
 
     .data %>%
       left_join(dictionnary, setNames("cryptogram", .varname)) %>%
