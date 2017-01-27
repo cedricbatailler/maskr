@@ -9,6 +9,12 @@
 #'
 #' @import dplyr
 #' @export
+#'
+#' #' @examples
+#' library(maskr)
+#' data(mtcars)
+#' dic <- mtcars %>% dictionnary(cyl)
+#' mtcars_encrypted <- mtcars %>% encrypt(cyl, dic)
 
 encrypt <-
   function(.data, .var, dictionnary)
