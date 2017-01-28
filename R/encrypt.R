@@ -5,10 +5,10 @@
 #'
 #' @param .data Dataframe containing the variable
 #' @param .var Column to be crypted
-#' @param .dictionnary Dictionnary to be used to crypt the variable
+#' @param dictionnary Dictionnary to be used to crypt the variable
 #'
 #' @import dplyr
-#' @importFrom stats SetNames
+#' @importFrom stats setNames
 #' @importFrom lazyeval interp
 #' @export
 

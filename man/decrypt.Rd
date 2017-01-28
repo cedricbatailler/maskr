@@ -11,7 +11,7 @@ decrypt(.data, .var, dictionnary)
 
 \item{.var}{Column to be decrypted}
 
-\item{.dictionnary}{Dictionnary to be used to decrypt the crypted variable}
+\item{dictionnary}{Dictionnary to be used to decrypt the crypted variable}
 }
 \description{
 Given a maskr crypted dataframe and a dictionnary, returns a decrypted data
