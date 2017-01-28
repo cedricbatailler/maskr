@@ -11,6 +11,10 @@
 #' @importFrom stats setNames
 #' @export
 #'
+#'#' @examples
+#' library(maskr)
+#' data(mtcars)
+#' dic <- mtcars %>% dictionnary(cyl)
 
 dictionnary <- function(.data, .var) {
   # Use dictionnary specific method according to object's class
