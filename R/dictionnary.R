@@ -8,7 +8,7 @@
 #'
 #' @import dplyr
 #' @importFrom digest sha1
-#' @importFrom stats SetNames
+#' @importFrom stats setNames
 #' @export
 #'
 

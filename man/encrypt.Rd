@@ -11,7 +11,7 @@ encrypt(.data, .var, dictionnary)
 
 \item{.var}{Column to be crypted}
 
-\item{.dictionnary}{Dictionnary to be used to crypt the variable}
+\item{dictionnary}{Dictionnary to be used to crypt the variable}
 }
 \description{
 Given a maskr dataframe and a dictionnary, returns a crypted data
