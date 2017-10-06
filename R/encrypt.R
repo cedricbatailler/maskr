@@ -1,11 +1,11 @@
-#' Crypt one column from a  dataframe using a dictionnary
+#' Encrypt one column from a  dataframe using a dictionary
 #'
-#' Given a maskr dataframe and a dictionnary, returns a crypted data
+#' Given a maskr dataframe and a dictionary, returns a crypted data
 #' frame.
 #'
 #' @param .data Dataframe containing the variable
 #' @param .var Column to be crypted
-#' @param dictionnary Dictionnary to be used to crypt the variable
+#' @param dictionary Dictionary to be used to crypt the variable
 #'
 #' @import dplyr
 #' @importFrom stats setNames
@@ -13,7 +13,7 @@
 #' @export
 
 encrypt <-
-  function(.data, .var, dictionnary)
+  function(.data, .var, dictionary)
   {
     # Use encrypt specific method according to object's class
     UseMethod("encrypt")
@@ -22,14 +22,14 @@ encrypt <-
 #' @export
 
 encrypt.data.frame <-
-  function(.data, .var, dictionnary)
+  function(.data, .var, dictionary)
   {
     # Extract variable to be process as a string
     .varname <-
-      deparse(substitute(.var))
+      deparse(substitute(.var) )
 
     # Take ".data"
-    # and append dictionnary using a match between "word" and ".var"
+    # and append dictionary using a match between "word" and ".var"
     # set ".var" columns value to "cryptogram" one's
     # drop "cryptogram" column
 
@@ -37,8 +37,8 @@ encrypt.data.frame <-
       interp(~cryptogram)
 
     .data %>%
-      left_join(dictionnary, setNames("word", .varname)) %>%
-      mutate_(.dots = setNames(list(mutate_call), .varname)) %>%
+      left_join(dictionary, setNames("word", .varname) ) %>%
+      mutate_(.dots = setNames(list(mutate_call), .varname) ) %>%
       select(-cryptogram)
 
   }

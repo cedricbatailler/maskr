@@ -2,19 +2,18 @@
 % Please edit documentation in R/decrypt.R
 \name{decrypt}
 \alias{decrypt}
-\title{Decrypt one column from a crypted dataframe using a dictionnary}
+\title{Decrypt one column from a crypted dataframe using a dictionary}
 \usage{
-decrypt(.data, .var, dictionnary)
+decrypt(.data, .var, dictionary)
 }
 \arguments{
 \item{.data}{Dataframe containing crypted variable}
 
 \item{.var}{Column to be decrypted}
 
-\item{dictionnary}{Dictionnary to be used to decrypt the crypted variable}
+\item{dictionary}{Dictionary to be used to decrypt the crypted variable}
 }
 \description{
-Given a maskr crypted dataframe and a dictionnary, returns a decrypted data
+Given a maskr crypted dataframe and a dictionary, returns a decrypted data
 frame.
 }
-
