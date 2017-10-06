@@ -5,26 +5,31 @@
 #'
 #' @param .data Dataframe containing the variable
 #' @param .var Column to be crypted
-#' @param dictionary Dictionary to be used to crypt the variable
 #'
 #' @import dplyr
 #' @importFrom stats setNames
 #' @importFrom lazyeval interp
 #' @export
 
-encrypt <-
-  function(.data, .var, dictionary)
-  {
-    # Use encrypt specific method according to object's class
+encrypt <- function(.data, .var){
+
+  # Use encrypt specific method according to object's class
+
     UseMethod("encrypt")
-  }
+
+}
 
 #' @export
 
-encrypt.data.frame <-
-  function(.data, .var, dictionary)
-  {
+encrypt.data.frame <- function(.data, .var){
+
+    # Creating the code, using the dictionary function
+
+    .dic <-
+      dictionary(.data, .var)
+
     # Extract variable to be process as a string
+
     .varname <-
       deparse(substitute(.var) )
 
@@ -36,9 +41,13 @@ encrypt.data.frame <-
     mutate_call <-
       interp(~cryptogram)
 
-    .data %>%
-      left_join(dictionary, setNames("word", .varname) ) %>%
-      mutate_(.dots = setNames(list(mutate_call), .varname) ) %>%
-      select(-cryptogram)
+    .data_old_name <-
+      deparse(substitute(.data) )
 
-  }
+    .data %>%
+      left_join(.dic, setNames("word", .varname) ) %>%
+      mutate_(.dots = setNames(list(mutate_call), .varname) ) %>%
+      select(-cryptogram) %>%
+      setattr(., "old", .data_old_name)
+
+}

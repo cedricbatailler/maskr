@@ -30,8 +30,7 @@ We use below the `mtcars` dataset, and consider that we are interested in the ef
 library(tidyverse)
 library(maskr)
 data(mtcars)
-dic <- mtcars %>% dictionary(cyl)
-mtcars_encrypted <- mtcars %>% encrypt(cyl, dic)
+mtcars_encrypted <- encrypt(mtcars, cyl)
 ```
 
 We can then conduct our analyses as planned with the encrypted dataframe...

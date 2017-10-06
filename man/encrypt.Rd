@@ -4,14 +4,12 @@
 \alias{encrypt}
 \title{Encrypt one column from a  dataframe using a dictionary}
 \usage{
-encrypt(.data, .var, dictionary)
+encrypt(.data, .var)
 }
 \arguments{
 \item{.data}{Dataframe containing the variable}
 
 \item{.var}{Column to be crypted}
-
-\item{dictionary}{Dictionary to be used to crypt the variable}
 }
 \description{
 Given a maskr dataframe and a dictionary, returns a crypted data

@@ -4,14 +4,12 @@
 \alias{decrypt}
 \title{Decrypt one column from a crypted dataframe using a dictionary}
 \usage{
-decrypt(.data, .var, dictionary)
+decrypt(.data, .var)
 }
 \arguments{
 \item{.data}{Dataframe containing crypted variable}
 
 \item{.var}{Column to be decrypted}
-
-\item{dictionary}{Dictionary to be used to decrypt the crypted variable}
 }
 \description{
 Given a maskr crypted dataframe and a dictionary, returns a decrypted data

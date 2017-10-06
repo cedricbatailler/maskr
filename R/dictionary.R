@@ -9,20 +9,24 @@
 #' @import dplyr
 #' @importFrom digest sha1
 #' @importFrom stats setNames
+#' @importFrom lazyeval expr_text
 #' @export
-#'
 
 dictionary <- function(.data, .var) {
+
   # Use dictionary specific method according to object's class
+
   UseMethod("dictionary")
+
 }
 
 #' @export
+
 dictionary.data.frame <- function(.data, .var) {
 
   # Extract variable to be process as a string
-  .varname <-
-    deparse(substitute(.var) )
+
+  .varname <- expr_text(.var)
 
   # Within .data
   # Keep ".var" column
@@ -40,4 +44,5 @@ dictionary.data.frame <- function(.data, .var) {
     group_by(word) %>%
     mutate(cryptogram = sha1(word) ) %>%
     select(word, cryptogram)
+
 }
