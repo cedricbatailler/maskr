@@ -1,24 +1,23 @@
-#' Create a SHA1 dictionary from a dataframe column
+#' Create a SHA1 dictionary
 #'
-#' Given a dataframe and a column variable, returns a dictionary to be used
-#' to crypt and decrypt this variable using \code{encrypt()} and
+#' Given a dataframe and some column variables, returns a dictionary to be used
+#' to crypt and decrypt these variables using \code{encrypt()} and
 #' \code{decrypt()} functions.
 #'
-#' @param .data Dataframe containing the variable
-#' @param .var Column to be used to create the dictionary
+#' @param .data Dataframe containing the variables
+#' @param ... Column variables to be used to create the dictionary
 #'
 #' @import dplyr
 #' @importFrom digest sha1
-#' @importFrom stats setNames
-#' @importFrom lazyeval expr_text
+#' @importFrom rlang set_names
 #'
 #' @examples
 #' data(mtcars)
-#' mtcars_encrypted <- encrypt(mtcars, cyl)
+#' dictionary(mtcars, cyl)
 #'
 #' @export
 
-dictionary <- function(.data, .var) {
+dictionary <- function(.data, ...) {
 
   # Use dictionary specific method according to object's class
 
@@ -28,11 +27,11 @@ dictionary <- function(.data, .var) {
 
 #' @export
 
-dictionary.data.frame <- function(.data, .var) {
+dictionary.data.frame <- function(.data, ...) {
 
-  # Extract variable to be process as a string
+  # Extract variables to be crypted as quosures
 
-  .varname <- expr_text(.var)
+  .vars <- quos(...)
 
   # Within .data
   # Keep ".var" column
@@ -43,12 +42,12 @@ dictionary.data.frame <- function(.data, .var) {
   # Finaly, return a dataframe with "word" and "cryptogram" column
 
   .data %>%
-    select_(.varname) %>%
+    select(!!!.vars) %>%
     distinct() %>%
-    mutate_(.dots = setNames(list(.varname), "word") ) %>%
+    mutate_(.dots = set_names(.vars, "word") ) %>%
     select(word) %>%
     group_by(word) %>%
-    mutate(cryptogram = sha1(word, digits = 10) ) %>%
+    mutate(cryptogram = sha1(word) ) %>%
     select(word, cryptogram)
 
 }

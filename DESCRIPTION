@@ -14,4 +14,5 @@ Imports:
     dplyr,
     digest,
     lazyeval,
-    data.table
+    data.table,
+    rlang

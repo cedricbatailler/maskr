@@ -4,12 +4,12 @@
 \alias{encrypt}
 \title{Encrypt one column from a dataframe}
 \usage{
-encrypt(.data, .var)
+encrypt(.data, ...)
 }
 \arguments{
 \item{.data}{Dataframe containing the variable}
 
-\item{.var}{Column to be crypted}
+\item{...}{Columns to be encrypted}
 }
 \description{
 Given a dataframe and a column variable, returns a crypted data frame.

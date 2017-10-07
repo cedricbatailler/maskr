@@ -3,10 +3,10 @@
 #' Given a dataframe and a column variable, returns a crypted data frame.
 #'
 #' @param .data Dataframe containing the variable
-#' @param .var Column to be crypted
+#' @param ... Columns to be encrypted
 #'
 #' @import dplyr
-#' @importFrom stats setNames
+#' @importFrom rlang set_names
 #' @importFrom lazyeval interp
 #' @importFrom data.table setattr
 #'
@@ -16,7 +16,7 @@
 #'
 #' @export
 
-encrypt <- function(.data, .var){
+encrypt <- function(.data, ...){
 
   # Use encrypt specific method according to object's class
 
@@ -26,17 +26,16 @@ encrypt <- function(.data, .var){
 
 #' @export
 
-encrypt.data.frame <- function(.data, .var){
+encrypt.data.frame <- function(.data, ...){
 
     # Creating the code, using the dictionary function
 
     .dic <-
-      dictionary(.data, .var)
+      dictionary(.data, ...)
 
-    # Extract variable to be process as a string
+    # Extract variables to be process as quosures
 
-    .varname <-
-      deparse(substitute(.var) )
+    .vars <- quos(...)
 
     # Store the old name of the original dataframe,
     # to assign it later as an attribute (fragile...)
@@ -53,11 +52,10 @@ encrypt.data.frame <- function(.data, .var){
       interp(~cryptogram)
 
     .data %>%
-      left_join(.dic, setNames("word", .varname) ) %>%
-      mutate_(.dots = setNames(list(mutate_call), .varname) ) %>%
+      left_join(.dic, set_names("word", substr(paste(.vars), 2, 10) ) ) %>%
+      mutate_(.dots = set_names(list(mutate_call), substr(paste(.vars), 2, 10) ) ) %>%
       select(-cryptogram) %>%
       setattr(., "old", .data_old_name) %>%
-      setattr(., "dic", .dic) %>%
-      setattr(., "class", c("maskr.df", "data.frame") )
+      setattr(., "dic", .dic)
 
 }

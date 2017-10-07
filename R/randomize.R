@@ -8,17 +8,20 @@
 #' @export
 #'
 
-randomize <-
-  function(.data)
-  {
-    # Use randomize specific method according to object's class
-    UseMethod("randomize")
-  }
+randomize <- function(.data) {
+
+  # Use randomize specific method according to object's class
+
+  UseMethod("randomize")
+
+}
 
 #' @export
-randomize.data.frame <-
-  function(.data)
-  {
-    .data %>%
-      sample_n(nrow(.data) )
-  }
+
+randomize.data.frame <- function(.data) {
+
+  .data %>%
+    sample_n(nrow(.data) )
+
+}
+
