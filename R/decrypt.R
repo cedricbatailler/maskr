@@ -7,6 +7,7 @@
 #' @param ... Columns to be decrypted
 #'
 #' @import dplyr
+#' @importFrom rlang f_rhs
 #' @importFrom rlang set_names
 #' @importFrom lazyeval interp
 #'
@@ -54,10 +55,25 @@ decrypt.data.frame <- function(.data, ...){
   mutate_call <-
     interp(~word)
 
-  .data %>%
-    left_join(.dic, set_names("cryptogram", substr(paste(.vars), 2, 10) ) ) %>%
-    mutate_(.dots = set_names(list(mutate_call), substr(paste(.vars), 2, 10) ) ) %>%
-    select(-word) %>%
-    setattr(., "row.names", rownames(.old_data) )
+  # .data %>%
+  #   left_join(.dic, set_names("cryptogram", f_rhs(.vars[[1]]) ) ) %>%
+  #   mutate_(.dots = set_names(list(mutate_call), f_rhs(.vars[[1]]) ) ) %>%
+  #   select(-word) %>%
+  #   setattr(., "row.names", rownames(.old_data) )
+
+  for(i in 1:length(.vars) ) {
+
+    .var <- .vars[i]
+
+    .data <-
+      .data %>%
+        left_join(.dic[[i]], set_names("cryptogram", f_rhs(.var[[1]]) ) ) %>%
+        mutate_(.dots = set_names(list(mutate_call), f_rhs(.var[[1]]) ) ) %>%
+        select(-word) %>%
+        setattr(., "row.names", rownames(.old_data) )
+
+  }
+
+  return(.data)
 
 }

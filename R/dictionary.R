@@ -41,13 +41,32 @@ dictionary.data.frame <- function(.data, ...) {
   # Then, create a new column which contains SHA1 hash of each observation
   # Finaly, return a dataframe with "word" and "cryptogram" column
 
-  .data %>%
-    select(!!!.vars) %>%
-    distinct() %>%
-    mutate_(.dots = set_names(.vars, "word") ) %>%
-    select(word) %>%
-    group_by(word) %>%
-    mutate(cryptogram = sha1(word) ) %>%
-    select(word, cryptogram)
+  # .data %>%
+  #   select(!!!.vars) %>%
+  #   distinct() %>%
+  #   mutate_(.dots = set_names(.vars, "word") ) %>%
+  #   select(word) %>%
+  #   group_by(word) %>%
+  #   mutate(cryptogram = sha1(word) ) %>%
+  #   select(word, cryptogram)
+
+  .dic <- list()
+
+  for(i in 1:length(.vars) ) {
+
+    .var <- .vars[i]
+
+    .dic[[i]] <-
+      .data %>%
+      select(!!!.var) %>%
+      distinct() %>%
+      mutate_(.dots = set_names(.var, "word") ) %>%
+      select(word) %>%
+      group_by(word) %>%
+      mutate(cryptogram = sha1(word) ) %>%
+      select(word, cryptogram)
+  }
+
+  return(.dic)
 
 }

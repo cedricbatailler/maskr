@@ -26,27 +26,27 @@ More precisely, `maskr` allow to perform the sensitive processing of outliers da
 
 ## How to use it ?
 
-We use below the `mtcars` dataset. Consider that we are interested in the effects of the number of cylinders `cyl` on fuel consumption. We start by encrypting this particular column.
+We use below the `mtcars` dataset. Consider that we are interested in the effects of the number of cylinders `cyl` and `vs` on fuel consumption. We start by encrypting these two columns.
 
 ``` r
 library(maskr)
 data(mtcars)
-mtcars_encrypted <- encrypt(mtcars, cyl)
+mtcars_encrypted <- encrypt(mtcars, cyl, vs)
 ```
 
 We can then process outliers on the encrypted dataframe...
 
 ``` r
 devtools::install_github("cedricbatailler/LIPmisc")
-mtcars_decrypted <- decrypt(mtcars_encrypted, cyl)
-mtcars_decrypted <- mtcars_decrypted[!sdr>2,]
+outliers <- lm_outliers(mtcars_encrypted, mpg ~ cyl * vs)
+mtcars_encrypted <- mtcars_encrypted[!outliers$sdr>2,]
 ```
 
 And finally conduct our analyses, as planned, with the back-decrypted dataframe.
 
 ``` r
-mtcars_decrypted <- decrypt(mtcars_encrypted, cyl)
-lm(mpg ~ cyl, mtcars_decrypted)
+mtcars_decrypted <- decrypt(mtcars_encrypted, cyl, vs)
+lm(mpg ~ cyl * vs, mtcars_decrypted)
 ```
 
 ## References
