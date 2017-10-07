@@ -14,19 +14,24 @@
 #' data(mtcars)
 #' mtcars_encrypted <- encrypt(mtcars, cyl)
 #' mtcars_decrypted <- decrypt(mtcars_encrypted, cyl)
+#' identical(mtcars, mtcars_decrypted)
 #'
 #' @export
+
+## quiets concerns of R CMD check re: the .'s that appear in pipelines
+if(getRversion() >= "2.15.1")  utils::globalVariables(c(".","word","cryptogram") )
 
 decrypt <- function(.data, .var){
 
   # Use decrypt specific method according to object's class
 
-    UseMethod("decrypt")
+  UseMethod("decrypt")
 
 }
 
 #' @export
 
+#' @S3method decrypt seqER
 decrypt.data.frame <- function(.data, .var){
 
   # Retreving the code, using the dictionary function
@@ -54,6 +59,7 @@ decrypt.data.frame <- function(.data, .var){
   .data %>%
     left_join(.dic, setNames("cryptogram", .varname) ) %>%
     mutate_(.dots = setNames(list(mutate_call), .varname) ) %>%
-    select(-word)
+    select(-word) %>%
+    setattr(., "row.names", rownames(.old_data) )
 
 }

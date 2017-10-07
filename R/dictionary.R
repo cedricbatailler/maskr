@@ -48,7 +48,7 @@ dictionary.data.frame <- function(.data, .var) {
     mutate_(.dots = setNames(list(.varname), "word") ) %>%
     select(word) %>%
     group_by(word) %>%
-    mutate(cryptogram = sha1(word) ) %>%
+    mutate(cryptogram = sha1(word, digits = 10) ) %>%
     select(word, cryptogram)
 
 }

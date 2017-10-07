@@ -41,6 +41,14 @@ summary(model)
 
 Interestingly, when we output the summary of this model (or plot data), the original names are diplayed (feature)...
 
+We can then check whether the decrypted dataframe is identical to the original one...
+
+``` r
+
+mtcars_decrypted <- decrypt(mtcars_encrypted, cyl)
+identical(mtcars, mtcars_decrypted)
+```
+
 ## References
 
 Wicherts, J. M., Veldkamp, C. L. S., Augusteijn, H. E. M., Bakker, M., van Aert, R. C. M., & van Assen, M. A. L. M. (2016). Degrees of Freedom in Planning, Running, Analyzing, and Reporting Psychological Studies: A Checklist to Avoid p-Hacking. Frontiers in Psychology, 7(November), 1–12. http://doi.org/10.3389/fpsyg.2016.01832

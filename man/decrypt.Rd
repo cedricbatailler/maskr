@@ -19,5 +19,6 @@ data frame.
 data(mtcars)
 mtcars_encrypted <- encrypt(mtcars, cyl)
 mtcars_decrypted <- decrypt(mtcars_encrypted, cyl)
+identical(mtcars, mtcars_decrypted)
 
 }

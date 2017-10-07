@@ -20,7 +20,7 @@ encrypt <- function(.data, .var){
 
   # Use encrypt specific method according to object's class
 
-    UseMethod("encrypt")
+  UseMethod("encrypt")
 
 }
 
@@ -56,6 +56,8 @@ encrypt.data.frame <- function(.data, .var){
       left_join(.dic, setNames("word", .varname) ) %>%
       mutate_(.dots = setNames(list(mutate_call), .varname) ) %>%
       select(-cryptogram) %>%
-      setattr(., "old", .data_old_name)
+      setattr(., "old", .data_old_name) %>%
+      setattr(., "dic", .dic) %>%
+      setattr(., "class", c("maskr.df", "data.frame") )
 
 }
