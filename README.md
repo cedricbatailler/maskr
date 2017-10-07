@@ -24,10 +24,9 @@ That's what `maskr` is for.
 
 ## How to use it ?
 
-We use below the `mtcars` dataset, and consider that we are interested in the effects of the number of cylindeers `cyl`...we then want to blind ourselves to this specific column...
+We use below the `mtcars` dataset. Consider that we are interested in the effects of the number of cylinders `cyl` on fuel consumption. We then would like to conduct our analyses while being blind to the values of this specific column.
 
 ``` r
-library(tidyverse)
 library(maskr)
 data(mtcars)
 mtcars_encrypted <- encrypt(mtcars, cyl)

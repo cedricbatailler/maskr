@@ -1,7 +1,8 @@
 #' Create a SHA1 dictionary from a dataframe column
 #'
-#' Given a dataframe variable, returns a dictionary to be used to crypt and
-#' decrypt this variable using \code{crypt()} and \code{decrypt()} functions
+#' Given a dataframe and a column variable, returns a dictionary to be used
+#' to crypt and decrypt this variable using \code{encrypt()} and
+#' \code{decrypt()} functions.
 #'
 #' @param .data Dataframe containing the variable
 #' @param .var Column to be used to create the dictionary
@@ -10,6 +11,11 @@
 #' @importFrom digest sha1
 #' @importFrom stats setNames
 #' @importFrom lazyeval expr_text
+#'
+#' @examples
+#' data(mtcars)
+#' mtcars_encrypted <- encrypt(mtcars, cyl)
+#'
 #' @export
 
 dictionary <- function(.data, .var) {

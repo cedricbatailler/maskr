@@ -12,6 +12,12 @@ dictionary(.data, .var)
 \item{.var}{Column to be used to create the dictionary}
 }
 \description{
-Given a dataframe variable, returns a dictionary to be used to crypt and
-decrypt this variable using \code{crypt()} and \code{decrypt()} functions
+Given a dataframe and a column variable, returns a dictionary to be used
+to crypt and decrypt this variable using \code{encrypt()} and
+\code{decrypt()} functions.
+}
+\examples{
+data(mtcars)
+mtcars_encrypted <- encrypt(mtcars, cyl)
+
 }

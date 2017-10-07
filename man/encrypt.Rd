@@ -2,7 +2,7 @@
 % Please edit documentation in R/encrypt.R
 \name{encrypt}
 \alias{encrypt}
-\title{Encrypt one column from a  dataframe using a dictionary}
+\title{Encrypt one column from a dataframe}
 \usage{
 encrypt(.data, .var)
 }
@@ -12,6 +12,10 @@ encrypt(.data, .var)
 \item{.var}{Column to be crypted}
 }
 \description{
-Given a maskr dataframe and a dictionary, returns a crypted data
-frame.
+Given a dataframe and a column variable, returns a crypted data frame.
+}
+\examples{
+data(mtcars)
+mtcars_encrypted <- encrypt(mtcars, cyl)
+
 }

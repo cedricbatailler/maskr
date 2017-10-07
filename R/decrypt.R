@@ -1,7 +1,7 @@
-#' Decrypt one column from a crypted dataframe using a dictionary
+#' Decrypt one column from a crypted dataframe
 #'
-#' Given a maskr crypted dataframe and a dictionary, returns a decrypted data
-#' frame.
+#' Given a maskr crypted dataframe and a column variable, returns a decrypted
+#' data frame.
 #'
 #' @param .data Dataframe containing crypted variable
 #' @param .var Column to be decrypted
@@ -9,6 +9,12 @@
 #' @import dplyr
 #' @importFrom stats setNames
 #' @importFrom lazyeval interp
+#'
+#' @examples
+#' data(mtcars)
+#' mtcars_encrypted <- encrypt(mtcars, cyl)
+#' mtcars_decrypted <- decrypt(mtcars_encrypted, cyl)
+#'
 #' @export
 
 decrypt <- function(.data, .var){

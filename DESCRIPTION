@@ -12,4 +12,5 @@ License: MIT + file LICENSE
 Imports:
     dplyr,
     digest,
-    lazyeval
+    lazyeval,
+    data.table
