@@ -12,4 +12,3 @@ randomize(.data)
 \description{
 Randomize rows' order of a give data frame
 }
-

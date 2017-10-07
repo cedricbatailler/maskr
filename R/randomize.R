@@ -20,5 +20,5 @@ randomize.data.frame <-
   function(.data)
   {
     .data %>%
-      sample_n(nrow(.data))
+      sample_n(nrow(.data) )
   }
