@@ -32,14 +32,19 @@ data(mtcars)
 mtcars_encrypted <- encrypt(mtcars, cyl)
 ```
 
+## To be continued...
+
 We can then conduct our analyses as planned with the encrypted dataframe...
 
 ``` r
-model = lm(mpg ~ cyl, mtcars_encrypted)
-summary(model)
+m1 = lm(mpg ~ cyl, mtcars_encrypted)
 ```
 
 Interestingly, when we output the summary of this model (or plot data), the original names are diplayed (feature)...
+
+``` r
+summary(m1)
+```
 
 We can then check whether the decrypted dataframe is identical to the original one...
 

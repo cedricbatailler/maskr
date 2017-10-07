@@ -18,7 +18,7 @@
 #'
 #' @export
 
-## quiets concerns of R CMD check re: the .'s that appear in pipelines
+## quiets concerns of R CMD check
 if(getRversion() >= "2.15.1")  utils::globalVariables(c(".","word","cryptogram") )
 
 decrypt <- function(.data, .var){
@@ -31,7 +31,6 @@ decrypt <- function(.data, .var){
 
 #' @export
 
-#' @S3method decrypt seqER
 decrypt.data.frame <- function(.data, .var){
 
   # Retreving the code, using the dictionary function
