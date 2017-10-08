@@ -17,7 +17,7 @@
 #'
 #' @export
 
-dictionary <- function(.data, ...) {
+dictionary <- function(.data, ... ) {
 
   # Use dictionary specific method according to object's class
 
@@ -27,7 +27,7 @@ dictionary <- function(.data, ...) {
 
 #' @export
 
-dictionary.data.frame <- function(.data, ...) {
+dictionary.data.frame <- function(.data, ... ) {
 
   # Extract variables to be crypted as quosures
 
@@ -40,15 +40,6 @@ dictionary.data.frame <- function(.data, ...) {
   # Select this new column
   # Then, create a new column which contains SHA1 hash of each observation
   # Finaly, return a dataframe with "word" and "cryptogram" column
-
-  # .data %>%
-  #   select(!!!.vars) %>%
-  #   distinct() %>%
-  #   mutate_(.dots = set_names(.vars, "word") ) %>%
-  #   select(word) %>%
-  #   group_by(word) %>%
-  #   mutate(cryptogram = sha1(word) ) %>%
-  #   select(word, cryptogram)
 
   .dic <- list()
 

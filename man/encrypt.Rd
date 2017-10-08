@@ -2,17 +2,17 @@
 % Please edit documentation in R/encrypt.R
 \name{encrypt}
 \alias{encrypt}
-\title{Encrypt one column from a dataframe}
+\title{Encrypt multiple columns from a dataframe}
 \usage{
 encrypt(.data, ...)
 }
 \arguments{
-\item{.data}{Dataframe containing the variable}
+\item{.data}{Dataframe containing the variables}
 
 \item{...}{Columns to be encrypted}
 }
 \description{
-Given a dataframe and a column variable, returns a crypted data frame.
+Given a dataframe and some column variables, returns a crypted data frame.
 }
 \examples{
 data(mtcars)

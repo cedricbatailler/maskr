@@ -1,8 +1,8 @@
-#' Encrypt one column from a dataframe
+#' Encrypt multiple columns from a dataframe
 #'
-#' Given a dataframe and a column variable, returns a crypted data frame.
+#' Given a dataframe and some column variables, returns a crypted data frame.
 #'
-#' @param .data Dataframe containing the variable
+#' @param .data Dataframe containing the variables
 #' @param ... Columns to be encrypted
 #'
 #' @import dplyr
@@ -17,7 +17,7 @@
 #'
 #' @export
 
-encrypt <- function(.data, ...){
+encrypt <- function(.data, ... ){
 
   # Use encrypt specific method according to object's class
 
@@ -27,37 +27,25 @@ encrypt <- function(.data, ...){
 
 #' @export
 
-encrypt.data.frame <- function(.data, ...){
+encrypt.data.frame <- function(.data, ... ){
 
     # Creating the code, using the dictionary function
 
     .dic <-
-      dictionary(.data, ...)
+      dictionary(.data, ... )
 
     # Extract variables to be process as quosures
 
-    .vars <- quos(...)
+    .vars <-
+      quos(...)
 
-    # Store the old name of the original dataframe,
-    # to assign it later as an attribute (fragile...)
-
-    .data_old_name <-
-      deparse(substitute(.data) )
-
-    # Take ".data"
-    # and append dictionary using a match between "word" and ".var"
+    # Take ".data" and for each to-be encrypted variable
+    # append dictionary using a match between "word" and ".var"
     # set ".var" columns value to "cryptogram" one's
     # drop "cryptogram" column
 
     mutate_call <-
       interp(~cryptogram)
-
-    # .data %>%
-    #   left_join(.dic, set_names("word", f_rhs(.vars[[1]]) ) ) %>%
-    #   mutate_(.dots = set_names(list(mutate_call), f_rhs(.vars[[1]]) ) ) %>%
-    #   select(-cryptogram) %>%
-    #   setattr(., "old", .data_old_name) %>%
-    #   setattr(., "dic", .dic)
 
     for(i in 1:length(.vars) ) {
 
@@ -67,11 +55,14 @@ encrypt.data.frame <- function(.data, ...){
         .data %>%
           left_join(.dic[[i]], set_names("word", f_rhs(.var[[1]]) ) ) %>%
           mutate_(.dots = set_names(list(mutate_call), f_rhs(.var[[1]]) ) ) %>%
-          select(-cryptogram) %>%
-          setattr(., "old", .data_old_name) %>%
-          setattr(., "dic", .dic)
+          select(-cryptogram)
 
-      }
+    }
+
+    # Assign .dic to the parent environment
+    # in order to be retrieved later by decrypt
+
+    assign(".dic", .dic, parent.frame() )
 
     return(.data)
 

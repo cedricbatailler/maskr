@@ -2,7 +2,7 @@
 % Please edit documentation in R/decrypt.R
 \name{decrypt}
 \alias{decrypt}
-\title{Decrypt one column from a crypted dataframe}
+\title{Decrypt multiple columns from a crypted dataframe}
 \usage{
 decrypt(.data, ...)
 }
@@ -12,13 +12,12 @@ decrypt(.data, ...)
 \item{...}{Columns to be decrypted}
 }
 \description{
-Given a maskr crypted dataframe and a column variable, returns a decrypted
+Given a maskr crypted dataframe and some column variables, returns a decrypted
 data frame.
 }
 \examples{
 data(mtcars)
 mtcars_encrypted <- encrypt(mtcars, cyl)
 mtcars_decrypted <- decrypt(mtcars_encrypted, cyl)
-identical(mtcars, mtcars_decrypted)
 
 }
