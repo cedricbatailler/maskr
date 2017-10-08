@@ -34,14 +34,6 @@ dictionary.data.frame <- function(.data, ... ) {
 
   .vars <- quos(...)
 
-  # Within .data and for each to-be encrypted variable
-  # Keep ".var" column
-  # Then keep distinct observations
-  # Then create a column "word" from the ".var" column
-  # Select this new column
-  # Then, create a new column which contains SHA1 hash of each observation
-  # Finaly, return a dataframe with "word" and "cryptogram" column
-
   # .dic <- list()
   #
   # for(i in 1:length(.vars) ) {
@@ -61,12 +53,20 @@ dictionary.data.frame <- function(.data, ... ) {
   #
   # return(.dic)
 
+  # Within ".data", select ".vars" columns
+  # Then keep unique observations
+  # Convert to dataframe for subsequent use of dplyr
+  # Then create a column "word" from the ".vars"
+  # Select this new column
+  # Then, create a new column which contains SHA1 hash of each observation
+  # Finaly, return a dataframe with "word" and "cryptogram" columns
+
   .dic <-
     .data %>%
       select(!!!.vars) %>%
       map(., unique) %>%
       map(., data.frame) %>%
-      map(~mutate(., word = .[,1]) ) %>%
+      map(~mutate(., word = .[, 1]) ) %>%
       map(~select(., word) ) %>%
       map(~group_by(., word) ) %>%
       map(~mutate(., cryptogram = sha1(word) )  ) %>%
