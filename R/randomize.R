@@ -1,12 +1,12 @@
 #' Randomize rows' order
 #'
-#' Randomize rows' order of a give data frame
+#' Randomize rows' order of a give data frame.
 #'
 #' @param .data Dataframe containing rows' order to be randomized
 #'
 #' @import dplyr
-#' @export
 #'
+#' @export
 
 randomize <- function(.data) {
 
@@ -20,8 +20,6 @@ randomize <- function(.data) {
 
 randomize.data.frame <- function(.data) {
 
-  .data %>%
-    sample_n(nrow(.data) )
+  .data %>% sample_n(nrow(.data) )
 
 }
-

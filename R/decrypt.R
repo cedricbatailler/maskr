@@ -4,25 +4,23 @@
 #' data frame.
 #'
 #' @param .data Dataframe containing crypted variable
+#' @param .dic Dictionary containing the cryptograms
 #' @param ... Columns to be decrypted
 #'
-#' @import dplyr
-#' @importFrom rlang f_rhs
 #' @importFrom rlang set_names
 #' @importFrom lazyeval interp
+#' @importFrom rlang f_rhs
+#' @import dplyr
 #'
 #' @examples
 #' data(mtcars)
-#' mtcars_encrypted <- encrypt(mtcars, cyl)
-#' mtcars_decrypted <- decrypt(mtcars_encrypted, cyl)
+#' dic <- dictionary(mtcars, cyl, vs)
+#' mtcars_encrypted <- encrypt(mtcars, dic, cyl, vs)
+#' mtcars_decrypted <- decrypt(mtcars_encrypted, dic, cyl, vs)
 #'
 #' @export
 
-## quiets concerns notes of R CMD check
-if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",".dic",".old",
-  "word","cryptogram","set_names") )
-
-decrypt <- function(.data, ... ) {
+decrypt <- function(.data, .dic, ...) {
 
   # Use decrypt specific method according to object's class
 
@@ -32,30 +30,30 @@ decrypt <- function(.data, ... ) {
 
 #' @export
 
-decrypt.data.frame <- function(.data, ... ) {
+decrypt.data.frame <- function(.data, .dic, ...) {
 
   # Extract variables to be process as quosures
 
-  .vars <-
-    quos(...)
+  .vars <- quos(...)
 
   # Take ".data" and for each encrypted variable
   # append dictionary using a match between "cryptogram" and ".var"
   # set ".var" columns value to "word" one's
   # drop "word" column
 
-  mutate_call <-
-    interp(~word)
+  mutate_call <- interp(~word)
 
-  for(i in 1:length(.vars) ) {
+  for (i in 1:length(.vars) ) {
 
     .var <- .vars[i]
 
     .data <-
       .data %>%
-        left_join(.dic[[i]], set_names("cryptogram", f_rhs(.var[[1]]) ) ) %>%
-        mutate_(.dots = set_names(list(mutate_call), f_rhs(.var[[1]]) ) ) %>%
-        select(-word)
+        left_join(.dic[[i]], set_names("cryptogram",
+          deparse(f_rhs(.var[[1]]) ) ) ) %>%
+        mutate_(.dots = set_names(list(mutate_call),
+          deparse(f_rhs(.var[[1]]) ) ) ) %>%
+        select_(~-word)
   }
 
   return(.data)

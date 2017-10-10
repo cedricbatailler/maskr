@@ -4,10 +4,12 @@
 \alias{encrypt}
 \title{Encrypt multiple columns from a dataframe}
 \usage{
-encrypt(.data, ...)
+encrypt(.data, .dic, ...)
 }
 \arguments{
 \item{.data}{Dataframe containing the variables}
+
+\item{.dic}{Dictionary containing the cryptograms}
 
 \item{...}{Columns to be encrypted}
 }
@@ -16,6 +18,7 @@ Given a dataframe and some column variables, returns a crypted data frame.
 }
 \examples{
 data(mtcars)
-mtcars_encrypted <- encrypt(mtcars, cyl)
+dic <- dictionary(mtcars, cyl, vs)
+mtcars_encrypted <- encrypt(mtcars, dic, cyl, vs)
 
 }

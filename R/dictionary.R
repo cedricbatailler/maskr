@@ -7,14 +7,14 @@
 #' @param .data Dataframe containing the variables
 #' @param ... Column variables to be used to create the dictionary
 #'
-#' @import dplyr
-#' @importFrom purrr map
-#' @importFrom digest sha1
 #' @importFrom rlang set_names
+#' @importFrom digest sha1
+#' @importFrom purrr map
+#' @import dplyr
 #'
 #' @examples
 #' data(mtcars)
-#' dictionary(mtcars, cyl)
+#' dictionary(mtcars, cyl, vs)
 #'
 #' @export
 
@@ -33,25 +33,6 @@ dictionary.data.frame <- function(.data, ... ) {
   # Extract variables to be crypted as quosures
 
   .vars <- quos(...)
-
-  # .dic <- list()
-  #
-  # for(i in 1:length(.vars) ) {
-  #
-  #   .var <- .vars[i]
-  #
-  #   .dic[[i]] <-
-  #     .data %>%
-  #     select(!!!.var) %>%
-  #     distinct() %>%
-  #     mutate_(.dots = set_names(.var, "word") ) %>%
-  #     select(word) %>%
-  #     group_by(word) %>%
-  #     mutate(cryptogram = sha1(word) ) %>%
-  #     select(word, cryptogram)
-  # }
-  #
-  # return(.dic)
 
   # Within ".data", select ".vars" columns
   # Then keep unique observations

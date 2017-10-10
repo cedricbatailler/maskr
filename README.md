@@ -31,7 +31,8 @@ Below we use the `mtcars` dataset and consider that we are interested in the eff
 ``` r
 library(maskr)
 data(mtcars)
-mtcars_encrypted <- encrypt(mtcars, cyl, vs)
+dic <- dictionary(mtcars, cyl, vs)
+mtcars_encrypted <- encrypt(mtcars, dic, cyl, vs)
 ```
 
 We can then process outliers on the encrypted dataframe. For instance, we can choose to remove observations with studentized residuals superior than 2.
@@ -44,10 +45,10 @@ outliers <- lm_outliers(mtcars_encrypted, mpg ~ cyl, id)
 mtcars_encrypted <- mtcars_encrypted[!mtcars_encrypted$id==outliers$id[outliers$sdr>2],]
 ```
 
-And finall we can conduct our analyses, as planned, with the back-decrypted dataframe.
+And finally we can conduct our analyses, as planned, with the back-decrypted dataframe.
 
 ``` r
-mtcars_decrypted <- decrypt(mtcars_encrypted, cyl, vs)
+mtcars_decrypted <- decrypt(mtcars_encrypted, dic, cyl, vs)
 lm(mpg ~ cyl * vs, mtcars_decrypted)
 ```
 

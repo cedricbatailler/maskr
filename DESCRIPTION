@@ -2,7 +2,7 @@ Package: maskr
 Type: Package
 Title: maskr
 Version: 0.0.1
-Date: 2017-10-08
+Date: 2017-10-10
 Authors@R: as.person(c(
     "Cedric Batailler <cedric.batailler@univ-grenoble-alpes.fr> [aut, cre]",
     "Ladislas Nalborczyk <ladislas.nalborczyk@gmail.com> [aut]") )

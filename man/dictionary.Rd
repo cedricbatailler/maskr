@@ -18,6 +18,6 @@ to crypt and decrypt these variables using \code{encrypt()} and
 }
 \examples{
 data(mtcars)
-dictionary(mtcars, cyl)
+dictionary(mtcars, cyl, vs)
 
 }
