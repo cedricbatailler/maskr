@@ -10,5 +10,5 @@ randomize(.data)
 \item{.data}{Dataframe containing rows' order to be randomized}
 }
 \description{
-Randomize rows' order of a give data frame
+Randomize rows' order of a give data frame.
 }

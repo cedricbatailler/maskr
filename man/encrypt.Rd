@@ -2,20 +2,23 @@
 % Please edit documentation in R/encrypt.R
 \name{encrypt}
 \alias{encrypt}
-\title{Encrypt one column from a dataframe}
+\title{Encrypt multiple columns from a dataframe}
 \usage{
-encrypt(.data, .var)
+encrypt(.data, .dic, ...)
 }
 \arguments{
-\item{.data}{Dataframe containing the variable}
+\item{.data}{Dataframe containing the variables}
 
-\item{.var}{Column to be crypted}
+\item{.dic}{Dictionary containing the cryptograms}
+
+\item{...}{Columns to be encrypted}
 }
 \description{
-Given a dataframe and a column variable, returns a crypted data frame.
+Given a dataframe and some column variables, returns a crypted data frame.
 }
 \examples{
 data(mtcars)
-mtcars_encrypted <- encrypt(mtcars, cyl)
+dic <- dictionary(mtcars, cyl, vs)
+mtcars_encrypted <- encrypt(mtcars, dic, cyl, vs)
 
 }

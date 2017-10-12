@@ -1,24 +1,24 @@
-#' Create a SHA1 dictionary from a dataframe column
+#' Create a SHA1 dictionary
 #'
-#' Given a dataframe and a column variable, returns a dictionary to be used
-#' to crypt and decrypt this variable using \code{encrypt()} and
+#' Given a dataframe and some column variables, returns a dictionary to be used
+#' to crypt and decrypt these variables using \code{encrypt()} and
 #' \code{decrypt()} functions.
 #'
-#' @param .data Dataframe containing the variable
-#' @param .var Column to be used to create the dictionary
+#' @param .data Dataframe containing the variables
+#' @param ... Column variables to be used to create the dictionary
 #'
-#' @import dplyr
+#' @importFrom rlang set_names
 #' @importFrom digest sha1
-#' @importFrom stats setNames
-#' @importFrom lazyeval expr_text
+#' @importFrom purrr map
+#' @import dplyr
 #'
 #' @examples
 #' data(mtcars)
-#' mtcars_encrypted <- encrypt(mtcars, cyl)
+#' dictionary(mtcars, cyl, vs)
 #'
 #' @export
 
-dictionary <- function(.data, .var) {
+dictionary <- function(.data, ... ) {
 
   # Use dictionary specific method according to object's class
 
@@ -28,27 +28,29 @@ dictionary <- function(.data, .var) {
 
 #' @export
 
-dictionary.data.frame <- function(.data, .var) {
+dictionary.data.frame <- function(.data, ... ) {
 
-  # Extract variable to be process as a string
+  # Extract variables to be crypted as quosures
 
-  .varname <- expr_text(.var)
+  .vars <- quos(...)
 
-  # Within .data
-  # Keep ".var" column
-  # Then keep distinct observations
-  # Then create a column "word" from the ".var" column
+  # Within ".data", select ".vars" columns
+  # Then keep unique observations
+  # Convert to dataframe for subsequent use of dplyr
+  # Then create a column "word" from the ".vars"
   # Select this new column
   # Then, create a new column which contains SHA1 hash of each observation
-  # Finaly, return a dataframe with "word" and "cryptogram" column
+  # Finaly, return a dataframe with "word" and "cryptogram" columns
 
-  .data %>%
-    select_(.varname) %>%
-    distinct() %>%
-    mutate_(.dots = setNames(list(.varname), "word") ) %>%
-    select(word) %>%
-    group_by(word) %>%
-    mutate(cryptogram = sha1(word, digits = 10) ) %>%
-    select(word, cryptogram)
+  .dic <-
+    .data %>%
+      select(!!!.vars) %>%
+      map(., unique) %>%
+      map(., data.frame) %>%
+      map(~mutate(., word = .[, 1]) ) %>%
+      map(~select(., word) ) %>%
+      map(~group_by(., word) ) %>%
+      map(~mutate(., cryptogram = sha1(word) )  ) %>%
+      map(~select(., word, cryptogram) )
 
 }

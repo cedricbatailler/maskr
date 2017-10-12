@@ -2,9 +2,13 @@ Package: maskr
 Type: Package
 Title: maskr
 Version: 0.0.1
-Authors@R: person("Cedric", "Batailler", email = "cedric.batailler@univ-grenoble-alpes.fr",
-                  role = c("aut", "cre"))
+Date: 2017-10-10
+Authors@R: as.person(c(
+    "Cedric Batailler <cedric.batailler@univ-grenoble-alpes.fr> [aut, cre]",
+    "Ladislas Nalborczyk <ladislas.nalborczyk@gmail.com> [aut]") )
 Description: Masking and unmasking variables values using a piping syntax.
+URL: http://cedricbatailler/maskr
+BugReports: https://github.com/cedricbatailler/maskr/issues
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
@@ -13,4 +17,6 @@ Imports:
     dplyr,
     digest,
     lazyeval,
-    data.table
+    data.table,
+    rlang,
+    purrr

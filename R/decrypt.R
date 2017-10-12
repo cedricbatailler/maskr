@@ -1,27 +1,26 @@
-#' Decrypt one column from a crypted dataframe
+#' Decrypt multiple columns from a crypted dataframe
 #'
-#' Given a maskr crypted dataframe and a column variable, returns a decrypted
+#' Given a maskr crypted dataframe and some column variables, returns a decrypted
 #' data frame.
 #'
 #' @param .data Dataframe containing crypted variable
-#' @param .var Column to be decrypted
+#' @param .dic Dictionary containing the cryptograms
+#' @param ... Columns to be decrypted
 #'
-#' @import dplyr
-#' @importFrom stats setNames
+#' @importFrom rlang set_names
 #' @importFrom lazyeval interp
+#' @importFrom rlang f_rhs
+#' @import dplyr
 #'
 #' @examples
 #' data(mtcars)
-#' mtcars_encrypted <- encrypt(mtcars, cyl)
-#' mtcars_decrypted <- decrypt(mtcars_encrypted, cyl)
-#' identical(mtcars, mtcars_decrypted)
+#' dic <- dictionary(mtcars, cyl, vs)
+#' mtcars_encrypted <- encrypt(mtcars, dic, cyl, vs)
+#' mtcars_decrypted <- decrypt(mtcars_encrypted, dic, cyl, vs)
 #'
 #' @export
 
-## quiets concerns of R CMD check re: the .'s that appear in pipelines
-if(getRversion() >= "2.15.1")  utils::globalVariables(c(".","word","cryptogram") )
-
-decrypt <- function(.data, .var){
+decrypt <- function(.data, .dic, ...) {
 
   # Use decrypt specific method according to object's class
 
@@ -31,35 +30,32 @@ decrypt <- function(.data, .var){
 
 #' @export
 
-#' @S3method decrypt seqER
-decrypt.data.frame <- function(.data, .var){
+decrypt.data.frame <- function(.data, .dic, ...) {
 
-  # Retreving the code, using the dictionary function
+  # Extract variables to be process as quosures
 
-  .old_data <-
-    attributes(.data)$old %>%
-    get
+  .vars <- quos(...)
 
-  .dic <-
-    dictionary(.old_data, .var)
-
-  # Extract variable to be process as a string
-
-  .varname <-
-    deparse(substitute(.var) )
-
-  # Take ".data"
-  # and append dictionary using a match between "cryptogram" and ".var"
+  # Take ".data" and for each encrypted variable
+  # append dictionary using a match between "cryptogram" and ".var"
   # set ".var" columns value to "word" one's
   # drop "word" column
 
-  mutate_call <-
-    interp(~word)
+  mutate_call <- interp(~word)
 
-  .data %>%
-    left_join(.dic, setNames("cryptogram", .varname) ) %>%
-    mutate_(.dots = setNames(list(mutate_call), .varname) ) %>%
-    select(-word) %>%
-    setattr(., "row.names", rownames(.old_data) )
+  for (i in 1:length(.vars) ) {
+
+    .var <- .vars[i]
+
+    .data <-
+      .data %>%
+        left_join(.dic[[i]], set_names("cryptogram",
+          deparse(f_rhs(.var[[1]]) ) ) ) %>%
+        mutate_(.dots = set_names(list(mutate_call),
+          deparse(f_rhs(.var[[1]]) ) ) ) %>%
+        select_(~-word)
+  }
+
+  return(.data)
 
 }

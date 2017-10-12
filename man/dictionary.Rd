@@ -2,22 +2,22 @@
 % Please edit documentation in R/dictionary.R
 \name{dictionary}
 \alias{dictionary}
-\title{Create a SHA1 dictionary from a dataframe column}
+\title{Create a SHA1 dictionary}
 \usage{
-dictionary(.data, .var)
+dictionary(.data, ...)
 }
 \arguments{
-\item{.data}{Dataframe containing the variable}
+\item{.data}{Dataframe containing the variables}
 
-\item{.var}{Column to be used to create the dictionary}
+\item{...}{Column variables to be used to create the dictionary}
 }
 \description{
-Given a dataframe and a column variable, returns a dictionary to be used
-to crypt and decrypt this variable using \code{encrypt()} and
+Given a dataframe and some column variables, returns a dictionary to be used
+to crypt and decrypt these variables using \code{encrypt()} and
 \code{decrypt()} functions.
 }
 \examples{
 data(mtcars)
-mtcars_encrypted <- encrypt(mtcars, cyl)
+dictionary(mtcars, cyl, vs)
 
 }
