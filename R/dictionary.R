@@ -41,13 +41,10 @@ dictionary.data.frame <- function(.data, ... , .trunc = 6) {
   # Convert to dataframe
   # Then, create a new column which contains SHA1 hash of each observation
 
-  .dic <-
-    .data %>%
+  .data %>%
       select(!!!.vars) %>%
       map(unique) %>%
       map_df(~data.frame(word = .x), .id = "variable") %>%
       group_by(word) %>%
       mutate(cryptogram = substr(sha1(word), 1, .trunc) )
-
-  .dic
 }
