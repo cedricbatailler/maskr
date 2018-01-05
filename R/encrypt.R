@@ -31,6 +31,10 @@ encrypt.data.frame <- function(.data, .dic) {
     word  <- .dic[[i, "word"]]
     crypt <- .dic[[i, "cryptogram"]]
 
+    if(!is.character(.data[[var]]))
+      message(paste0("warning: ", var ," has been coerced to character."))
+
+
     .data[.data[[var]] == word, var] <- crypt
 
   }
