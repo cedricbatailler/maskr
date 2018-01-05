@@ -4,12 +4,14 @@
 \alias{dictionary}
 \title{Create a SHA1 dictionary}
 \usage{
-dictionary(.data, ...)
+dictionary(.data, ..., .trunc)
 }
 \arguments{
 \item{.data}{Dataframe containing the variables}
 
 \item{...}{Column variables to be used to create the dictionary}
+
+\item{.trunc}{Integer defining how many charachters the hash should be. Defaults to \code{.trunc = 6}}
 }
 \description{
 Given a dataframe and some column variables, returns a dictionary to be used
