@@ -6,11 +6,12 @@
 #'
 #' @param .data Dataframe containing the variables
 #' @param ... Column variables to be used to create the dictionary
-#' @param .trunc Integer defining how many charachters the hash should be. Defaults to \code{.trunc = 6}
+#' @param .trunc Integer defining how long the hash should be. Defaults to \code{.trunc = 6}.
 #'
 #' @importFrom rlang set_names
 #' @importFrom digest sha1
 #' @importFrom purrr map
+#' @importFrom purrr map_df
 #' @import dplyr
 #'
 #' @examples
@@ -29,7 +30,7 @@ dictionary <- function(.data, ..., .trunc) {
 
 #' @export
 
-dictionary.data.frame <- function(.data, ... , .trunc = 6) {
+dictionary.data.frame <- function(.data, ..., .trunc = 6) {
 
   # Extract variables to be crypted as quosures
 
@@ -37,21 +38,13 @@ dictionary.data.frame <- function(.data, ... , .trunc = 6) {
 
   # Within ".data", select ".vars" columns
   # Then keep unique observations
-  # Convert to dataframe for subsequent use of dplyr
-  # Then create a column "word" from the ".vars"
-  # Select this new column
+  # Convert to dataframe
   # Then, create a new column which contains SHA1 hash of each observation
-  # Finaly, return a dataframe with "word" and "cryptogram" columns
 
-  .dic <-
-    .data %>%
+  .data %>%
       select(!!!.vars) %>%
-      map(., unique) %>%
-      map(., data.frame) %>%
-      map(~mutate(., word = .[, 1]) ) %>%
-      map(~select(., word) ) %>%
-      map(~group_by(., word) ) %>%
-      map(~mutate(., cryptogram = substr(sha1(word), 1, .trunc) ) ) %>%
-      map(~select(., word, cryptogram) )
-
+      map(unique) %>%
+      map_df(~data.frame(word = .x), .id = "variable") %>%
+      group_by(word) %>%
+      mutate(cryptogram = substr(sha1(word), 1, .trunc) )
 }
