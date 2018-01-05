@@ -26,6 +26,7 @@ encrypt <- function(.data, .dic) {
 encrypt.data.frame <- function(.data, .dic) {
 
   for (i in 1:nrow(.dic) ) {
+
     var   <- .dic[[i, "variable"]]
     word  <- .dic[[i, "word"]]
     crypt <- .dic[[i, "cryptogram"]]
@@ -33,5 +34,7 @@ encrypt.data.frame <- function(.data, .dic) {
     .data[.data[[var]] == word, var] <- crypt
 
   }
+
   .data
+
 }

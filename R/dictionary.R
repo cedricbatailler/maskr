@@ -6,7 +6,7 @@
 #'
 #' @param .data Dataframe containing the variables
 #' @param ... Column variables to be used to create the dictionary
-#' @param .trunc Integer defining how many charachters the hash should be. Defaults to \code{.trunc = 6}
+#' @param .trunc Integer defining how long the hash should be. Defaults to \code{.trunc = 6}.
 #'
 #' @importFrom rlang set_names
 #' @importFrom digest sha1
@@ -30,7 +30,7 @@ dictionary <- function(.data, ..., .trunc) {
 
 #' @export
 
-dictionary.data.frame <- function(.data, ... , .trunc = 6) {
+dictionary.data.frame <- function(.data, ..., .trunc = 6) {
 
   # Extract variables to be crypted as quosures
 

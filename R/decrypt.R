@@ -27,6 +27,7 @@ decrypt <- function(.data, .dic) {
 decrypt.data.frame <- function(.data, .dic) {
 
   for (i in 1:nrow(.dic) ) {
+
     var   <- .dic[[i, "variable"]]
     word  <- .dic[[i, "word"]]
     crypt <- .dic[[i, "cryptogram"]]
