@@ -4,14 +4,12 @@
 \alias{decrypt}
 \title{Decrypt multiple columns from a crypted dataframe}
 \usage{
-decrypt(.data, .dic, ...)
+decrypt(.data, .dic)
 }
 \arguments{
 \item{.data}{Dataframe containing crypted variable}
 
 \item{.dic}{Dictionary containing the cryptograms}
-
-\item{...}{Columns to be decrypted}
 }
 \description{
 Given a maskr crypted dataframe and some column variables, returns a decrypted
@@ -20,7 +18,7 @@ data frame.
 \examples{
 data(mtcars)
 dic <- dictionary(mtcars, cyl, vs)
-mtcars_encrypted <- encrypt(mtcars, dic, cyl, vs)
-mtcars_decrypted <- decrypt(mtcars_encrypted, dic, cyl, vs)
+mtcars_encrypted <- encrypt(mtcars, dic)
+mtcars_decrypted <- decrypt(mtcars_encrypted, dic)
 
 }
