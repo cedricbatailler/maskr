@@ -45,5 +45,3 @@ encrypt.data.frame <- function(.data, .dic, .randomize = TRUE) {
   sample_n(.data, nrow(.data) )
 
 }
-
-summary
