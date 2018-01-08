@@ -4,12 +4,14 @@
 \alias{encrypt}
 \title{Encrypt multiple columns from a dataframe}
 \usage{
-encrypt(.data, .dic)
+encrypt(.data, .dic, .randomize = TRUE)
 }
 \arguments{
 \item{.data}{Dataframe containing the variables}
 
 \item{.dic}{Dictionary containing the cryptograms}
+
+\item{.randomize}{Randomize row order from \code{.data}. Defaults to \code{.randomize = TRUE}.}
 }
 \description{
 Given a dataframe and some column variables, returns a crypted data frame.

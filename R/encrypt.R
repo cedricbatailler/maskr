@@ -4,15 +4,17 @@
 #'
 #' @param .data Dataframe containing the variables
 #' @param .dic Dictionary containing the cryptograms
+#' @param .randomize Randomize row order from \code{.data}. Defaults to \code{.randomize = TRUE}.
 #'
 #' @examples
 #' data(mtcars)
 #' dic <- dictionary(mtcars, cyl, vs)
 #' mtcars_encrypted <- encrypt(mtcars, dic)
 #'
+#' @importFrom dplyr sample_n
 #' @export
 
-encrypt <- function(.data, .dic) {
+encrypt <- function(.data, .dic, .randomize = TRUE) {
 
   # Use encrypt specific method according to object's class
 
@@ -22,8 +24,7 @@ encrypt <- function(.data, .dic) {
 
 #' @export
 
-
-encrypt.data.frame <- function(.data, .dic) {
+encrypt.data.frame <- function(.data, .dic, .randomize = TRUE) {
 
   for (i in 1:nrow(.dic) ) {
 
@@ -39,6 +40,8 @@ encrypt.data.frame <- function(.data, .dic) {
 
   }
 
-  .data
+  if(!.randomize) {return(.data)}
+
+  sample_n(.data, nrow(.data) )
 
 }
