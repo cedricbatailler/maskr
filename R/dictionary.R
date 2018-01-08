@@ -42,9 +42,12 @@ dictionary.data.frame <- function(.data, ..., .trunc = 6) {
   # Then, create a new column which contains SHA1 hash of each observation
 
   .data %>%
-      select(!!!.vars) %>%
-      map(unique) %>%
-      map_df(~data.frame(word = .x), .id = "variable") %>%
-      group_by(word) %>%
-      mutate(cryptogram = substr(sha1(word), 1, .trunc) )
+    select(!!!.vars) %>%
+    map(unique) %>%
+    map_df(~data.frame(word = .x), .id = "variable") %>%
+    group_by(word) %>%
+    mutate(cryptogram = substr(sha1(word), 1, .trunc) ) %>%
+    # sample_n(n() ) %>%
+    ungroup() %>%
+    mutate(word = as_masked_character(word))
 }
